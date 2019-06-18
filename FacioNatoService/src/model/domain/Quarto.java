@@ -5,6 +5,7 @@
  */
 package model.domain;
 
+import java.io.Serializable;
 import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -22,7 +23,7 @@ import util.ValidacaoException;
  */
 @Entity
 @Table(name="QUARTO")
-public class Quarto {
+public class Quarto implements Serializable{
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
