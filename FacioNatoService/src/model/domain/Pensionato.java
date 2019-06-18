@@ -13,6 +13,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import util.ValidacaoException;
 
 /**
  *
@@ -37,6 +38,21 @@ public class Pensionato implements Serializable{
     private int quartos;
 
     public Pensionato() {
+    }
+    
+    public void validar() throws ValidacaoException{
+        if(endereco == null || endereco.equals(""))
+            throw new ValidacaoException("Endereço inválido");
+        
+        if(endereco.length() > 255)
+            throw new ValidacaoException("Endereço muito extenso");
+           
+        if(telefone.length() > 20)
+            throw new ValidacaoException("Telefone muito extenso");
+        
+        if(quartos < 1)
+            throw new ValidacaoException("Quantidade de quartos insulficiente");
+            
     }
 
     public Integer getId() {
