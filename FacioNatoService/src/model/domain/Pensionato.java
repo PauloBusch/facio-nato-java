@@ -42,7 +42,7 @@ public class Pensionato implements Serializable{
     
     public void validar() throws ValidacaoException{
         if(endereco == null || endereco.equals(""))
-            throw new ValidacaoException("Endereço inválido");
+            throw new ValidacaoException("Campo Endereço deve ser preenchido");
         
         if(endereco.length() > 255)
             throw new ValidacaoException("Endereço muito extenso");
