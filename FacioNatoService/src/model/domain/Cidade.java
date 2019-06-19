@@ -6,6 +6,7 @@
 package model.domain;
 
 import java.io.Serializable;
+import util.ValidacaoException;
 
 
 
@@ -17,6 +18,11 @@ public class Cidade implements Serializable {
     private String nome;
 
     public Cidade() {
+    }
+    
+    public void validar() throws ValidacaoException {
+        if(nome == null || nome.equals(""))
+            throw new ValidacaoException("Campo Cidade deve ser preenchido");
     }
         
     public String getNome() {

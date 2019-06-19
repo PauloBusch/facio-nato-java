@@ -43,7 +43,7 @@ public class Inquilino implements Serializable {
     /*Enumeração apenas em tabela*/
     @Enumerated(EnumType.STRING)
     @Column(name="CURSO", length = 100, nullable = false)
-    private Curso curso;
+    private Curso curso;    
     
     /*Enumeração real*/
     @Enumerated(EnumType.ORDINAL)
@@ -64,14 +64,12 @@ public class Inquilino implements Serializable {
         if(nome.length() > 200)
             throw new ValidacaoException("Nome muito extenso");
         
-        if(cidade == null || cidade.getNome() == null || cidade.getNome().equals(""))
-            throw new ValidacaoException("Campo Cidade deve ser preenchido");
+        cidade.validar();
         
         if(cidade.getNome().length() > 100)
             throw new ValidacaoException("Campo cidade muito extenso");
         
-        if(curso == null || curso.getNome() == null || curso.getNome().equals(""))
-            throw new ValidacaoException("Campo Curso deve ser preenchido");
+        curso.validar();
         
         if(curso.getNome().length() > 100)
             throw new ValidacaoException("Campo cidade muito extenso");
