@@ -5,13 +5,15 @@
  */
 package model.domain;
 
+import java.io.Serializable;
+
 
 
 /**
  *
  * @author paulo
  */
-public class Cidade {
+public class Cidade implements Serializable {
     private String nome;
 
     public Cidade() {
