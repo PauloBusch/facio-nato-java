@@ -45,10 +45,15 @@ public class Inquilino implements Serializable {
     @Column(name="CURSO", length = 100, nullable = false)
     private Curso curso;    
     
+    /*Enumeração apenas em tabela*/
+    @Enumerated(EnumType.STRING)
+    @Column(name="FORMA_PAGAMENTO")
+    private FormaPagamento formaPagamento;
+    
     /*Enumeração real*/
     @Enumerated(EnumType.ORDINAL)
     @Column(name="PERIODO", nullable = false)
-    private Periodo periodo;
+    private Periodo periodo;    
     
     @ManyToOne
     @JoinColumn(name="ID_QUARTO", nullable = false)
@@ -73,6 +78,8 @@ public class Inquilino implements Serializable {
         
         if(curso.getNome().length() > 100)
             throw new ValidacaoException("Campo cidade muito extenso");
+        
+        formaPagamento.validar();
         
         if(periodo == null)
             throw new ValidacaoException("Campo Periodo deve ser preenchido");
@@ -111,6 +118,14 @@ public class Inquilino implements Serializable {
 
     public void setCurso(Curso curso) {
         this.curso = curso;
+    }
+
+    public FormaPagamento getFormaPagamento() {
+        return formaPagamento;
+    }
+
+    public void setFormaPagamento(FormaPagamento formaPagamento) {
+        this.formaPagamento = formaPagamento;
     }
 
     public Periodo getPeriodo() {

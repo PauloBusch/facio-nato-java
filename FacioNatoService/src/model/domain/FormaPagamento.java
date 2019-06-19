@@ -5,13 +5,14 @@
  */
 package model.domain;
 
+import java.io.Serializable;
 import util.ValidacaoException;
 
 /**
  *
  * @author paulo
  */
-public class FormaPagamento {
+public class FormaPagamento implements Serializable {
     private String nome;
 
     public FormaPagamento() {
