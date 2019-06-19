@@ -47,7 +47,7 @@ public class Pensionato implements Serializable{
         if(endereco.length() > 255)
             throw new ValidacaoException("Endereço muito extenso");
            
-        if(telefone.length() > 20)
+        if(telefone == null || telefone.length() > 20)
             throw new ValidacaoException("Telefone muito extenso");
         
         if(quartos < 1)
