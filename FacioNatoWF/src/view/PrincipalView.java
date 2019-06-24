@@ -27,54 +27,74 @@ public class PrincipalView extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
+        MenuBar = new javax.swing.JMenuBar();
+        jMenu1 = new javax.swing.JMenu();
+        MnCadastros = new javax.swing.JMenu();
+        CadPensionato = new javax.swing.JMenuItem();
+        CadQuarto = new javax.swing.JMenuItem();
+        MnSobre = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setLocationByPlatform(true);
 
-        jButton1.setText("Show conf recurrence");
+        MenuBar.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
 
-        jButton2.setText("Show cad Inquilino");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        jMenu1.setText("Arquivo");
+        jMenu1.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        MenuBar.add(jMenu1);
+
+        MnCadastros.setText("Cadastros");
+        MnCadastros.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+
+        CadPensionato.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        CadPensionato.setText("Pensionato");
+        CadPensionato.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                CadPensionatoActionPerformed(evt);
             }
         });
+        MnCadastros.add(CadPensionato);
 
-        jButton3.setText("Show cad quarto");
+        CadQuarto.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        CadQuarto.setText("Quarto");
+        CadQuarto.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                CadQuartoActionPerformed(evt);
+            }
+        });
+        MnCadastros.add(CadQuarto);
+
+        MenuBar.add(MnCadastros);
+
+        MnSobre.setText("Ajuda");
+        MnSobre.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        MenuBar.add(MnSobre);
+
+        setJMenuBar(MenuBar);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(37, 37, 37)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButton2)
-                    .addComponent(jButton3)
-                    .addComponent(jButton1))
-                .addContainerGap(206, Short.MAX_VALUE))
+            .addGap(0, 819, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(28, 28, 28)
-                .addComponent(jButton2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 36, Short.MAX_VALUE)
-                .addComponent(jButton3)
-                .addGap(31, 31, 31)
-                .addComponent(jButton1)
-                .addGap(109, 109, 109))
+            .addGap(0, 501, Short.MAX_VALUE)
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        InquilinoView inquilinoView = new InquilinoView();
-        inquilinoView.setVisible(true);        
-    }//GEN-LAST:event_jButton2ActionPerformed
+    private void CadPensionatoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CadPensionatoActionPerformed
+        PensionatoView pensionatoView = new PensionatoView();
+        pensionatoView.setVisible(true);
+    }//GEN-LAST:event_CadPensionatoActionPerformed
+
+    private void CadQuartoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CadQuartoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_CadQuartoActionPerformed
 
     /**
      * @param args the command line arguments
@@ -112,8 +132,11 @@ public class PrincipalView extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
+    private javax.swing.JMenuItem CadPensionato;
+    private javax.swing.JMenuItem CadQuarto;
+    private javax.swing.JMenuBar MenuBar;
+    private javax.swing.JMenu MnCadastros;
+    private javax.swing.JMenu MnSobre;
+    private javax.swing.JMenu jMenu1;
     // End of variables declaration//GEN-END:variables
 }
