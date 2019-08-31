@@ -5,7 +5,6 @@
  */
 package model.domain;
 
-import java.util.List;
 import java.util.Objects;
 import util.ValidacaoException;
 /**

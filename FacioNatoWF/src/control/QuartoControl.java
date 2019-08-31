@@ -37,7 +37,7 @@ public final class QuartoControl {
     List<IDataSubscription> searchQuartos;
     IDataSubscription searchPensionato;
 
-    public QuartoControl() throws RemoteException{
+    public QuartoControl(){
         searchQuartos = new ArrayList<>();
         quartoService = ServiceLocator.getQuartoService();
         quartosTabela = ObservableCollections.observableList(
@@ -55,19 +55,19 @@ public final class QuartoControl {
     public void novo(){
         setQuartoDigitado(new Quarto());
     }
-    public void salvar() throws ValidacaoException, RemoteException{
+    public void salvar() throws ValidacaoException{
         quartoDigitado.setValor(Real.converter(valor, "Valor"));
         quartoDigitado.validar();
         quartoService.Save(quartoDigitado);
     
         novo();
     }
-    public void excluir() throws RemoteException{
+    public void excluir(){
         quartoService.Delete(quartoDigitado);
         
         novo();
     }
-    public void pesquisar() throws RemoteException {
+    public void pesquisar(){
         searchQuartos.forEach((IDataSubscription s) -> s.unsubscribe());
         searchQuartos.add(quartoService.Search(quartoDigitado).subscribe((List<Quarto> quartos) -> {
             quartosTabela.clear();

@@ -8,7 +8,9 @@ package model.service;
 import service.ICobrancaRecorrenteService;
 import service.IPensionatoService;
 import service.IQuartoService;
+import service.ICompraService;
 import service.CobrancaRecorrenteService;
+import service.CompraService;
 import service.PensionatoService;
 import service.QuartoService;
 
@@ -25,5 +27,8 @@ public class ServiceLocator {
     }
     public static ICobrancaRecorrenteService getCobrancaRecorrenteService(){
         return new CobrancaRecorrenteService();
+    }
+    public static ICompraService getCompraService(){
+        return new CompraService();
     }
 }

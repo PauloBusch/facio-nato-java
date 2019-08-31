@@ -33,6 +33,7 @@ public class PrincipalView extends javax.swing.JFrame {
         CadPensionato = new javax.swing.JMenuItem();
         CadQuarto = new javax.swing.JMenuItem();
         CadInquilino = new javax.swing.JMenuItem();
+        CadCompra = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
         MnSobre = new javax.swing.JMenu();
@@ -76,6 +77,15 @@ public class PrincipalView extends javax.swing.JFrame {
             }
         });
         MnCadastros.add(CadInquilino);
+
+        CadCompra.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        CadCompra.setText("Compra");
+        CadCompra.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                CadCompraActionPerformed(evt);
+            }
+        });
+        MnCadastros.add(CadCompra);
 
         MenuBar.add(MnCadastros);
 
@@ -134,6 +144,11 @@ public class PrincipalView extends javax.swing.JFrame {
         inquilinoView.setVisible(true);
     }//GEN-LAST:event_CadInquilinoActionPerformed
 
+    private void CadCompraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CadCompraActionPerformed
+        CompraView compraView = new CompraView();
+        compraView.setVisible(true);
+    }//GEN-LAST:event_CadCompraActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -170,6 +185,7 @@ public class PrincipalView extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JMenuItem CadCompra;
     private javax.swing.JMenuItem CadInquilino;
     private javax.swing.JMenuItem CadPensionato;
     private javax.swing.JMenuItem CadQuarto;
