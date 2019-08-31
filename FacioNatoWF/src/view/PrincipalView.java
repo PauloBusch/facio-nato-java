@@ -32,9 +32,13 @@ public class PrincipalView extends javax.swing.JFrame {
         MnCadastros = new javax.swing.JMenu();
         CadPensionato = new javax.swing.JMenuItem();
         CadQuarto = new javax.swing.JMenuItem();
+        CadInquilino = new javax.swing.JMenuItem();
+        jMenu2 = new javax.swing.JMenu();
+        jMenuItem1 = new javax.swing.JMenuItem();
         MnSobre = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Sistema de Gerenciamento de Pensionatos");
         setLocationByPlatform(true);
 
         MenuBar.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
@@ -64,7 +68,30 @@ public class PrincipalView extends javax.swing.JFrame {
         });
         MnCadastros.add(CadQuarto);
 
+        CadInquilino.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        CadInquilino.setText("Inquilino");
+        CadInquilino.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                CadInquilinoActionPerformed(evt);
+            }
+        });
+        MnCadastros.add(CadInquilino);
+
         MenuBar.add(MnCadastros);
+
+        jMenu2.setText("Configuração");
+        jMenu2.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+
+        jMenuItem1.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        jMenuItem1.setText("Aluguel");
+        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem1ActionPerformed(evt);
+            }
+        });
+        jMenu2.add(jMenuItem1);
+
+        MenuBar.add(jMenu2);
 
         MnSobre.setText("Ajuda");
         MnSobre.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
@@ -93,8 +120,19 @@ public class PrincipalView extends javax.swing.JFrame {
     }//GEN-LAST:event_CadPensionatoActionPerformed
 
     private void CadQuartoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CadQuartoActionPerformed
-        // TODO add your handling code here:
+        QuartoView quartoView = new QuartoView();
+        quartoView.setVisible(true);
     }//GEN-LAST:event_CadQuartoActionPerformed
+
+    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+        ConfigCobrancaView configCobrancaView = new ConfigCobrancaView();
+        configCobrancaView.setVisible(true);
+    }//GEN-LAST:event_jMenuItem1ActionPerformed
+
+    private void CadInquilinoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CadInquilinoActionPerformed
+        InquilinoView inquilinoView = new InquilinoView();
+        inquilinoView.setVisible(true);
+    }//GEN-LAST:event_CadInquilinoActionPerformed
 
     /**
      * @param args the command line arguments
@@ -132,11 +170,14 @@ public class PrincipalView extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JMenuItem CadInquilino;
     private javax.swing.JMenuItem CadPensionato;
     private javax.swing.JMenuItem CadQuarto;
     private javax.swing.JMenuBar MenuBar;
     private javax.swing.JMenu MnCadastros;
     private javax.swing.JMenu MnSobre;
     private javax.swing.JMenu jMenu1;
+    private javax.swing.JMenu jMenu2;
+    private javax.swing.JMenuItem jMenuItem1;
     // End of variables declaration//GEN-END:variables
 }

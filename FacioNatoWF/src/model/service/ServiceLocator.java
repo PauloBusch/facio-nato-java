@@ -5,20 +5,25 @@
  */
 package model.service;
 
-import java.rmi.Naming;
-import java.rmi.RemoteException;
+import service.ICobrancaRecorrenteService;
+import service.IPensionatoService;
+import service.IQuartoService;
+import service.CobrancaRecorrenteService;
 import service.PensionatoService;
+import service.QuartoService;
 
 /**
  *
  * @author paulo
  */
 public class ServiceLocator {
-    public static PensionatoService getPensionatoService()  throws RemoteException{
-        try{
-            return (PensionatoService)Naming.lookup(PensionatoService.URL_SERVICO);
-        }catch(Exception e){
-            throw new RemoteException(e.getMessage());
-        }
+    public static IPensionatoService getPensionatoService(){
+        return new PensionatoService();
+    }
+    public static IQuartoService getQuartoService(){
+        return new QuartoService();
+    }
+    public static ICobrancaRecorrenteService getCobrancaRecorrenteService(){
+        return new CobrancaRecorrenteService();
     }
 }

@@ -5,26 +5,42 @@
  */
 package model.dao;
 
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
-
+import com.google.auth.oauth2.GoogleCredentials;
+import com.google.firebase.FirebaseApp;
+import com.google.firebase.FirebaseOptions;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 
 /**
  *
  * @author paulo
  */
 public class Conexao {
-    private static EntityManagerFactory emf;
-    private static Conexao conexao;
-    
+    private static Conexao _conexao;
+    private FirebaseOptions _options;
     public Conexao(){
-        emf = Persistence.createEntityManagerFactory("FacioNatoServicePU");
-    }
-    public synchronized static EntityManager getEntityManager(){
-        if(conexao == null)
-            conexao = new Conexao();
+        String pathAuth = "C:\\Users\\paulo\\OneDrive\\Área de Trabalho\\Projetos\\Java\\Firebase\\KeyAccount.json";
+        try{
+            FileInputStream serviceAccount = new FileInputStream(pathAuth);
+            _options = new FirebaseOptions.Builder()
+              .setCredentials(GoogleCredentials.fromStream(serviceAccount))
+              .setDatabaseUrl("https://fir-7abec.firebaseio.com")
+              .build();
+        }catch(FileNotFoundException ex){
         
-        return emf.createEntityManager();
+        }catch(IOException ex){
+        
+        }
+
+        FirebaseApp.initializeApp(_options);
+    }
+    public synchronized static FirebaseDatabase getDatabase(){
+        if(_conexao == null)
+            _conexao = new Conexao();
+        
+        return FirebaseDatabase.getInstance();
     }
 }

@@ -16,6 +16,7 @@ public class InquilinoView extends javax.swing.JFrame {
      */
     public InquilinoView() {
         initComponents();
+        txtName.grabFocus();
     }
 
     /**
@@ -47,10 +48,10 @@ public class InquilinoView extends javax.swing.JFrame {
         srcData = new javax.swing.JScrollPane();
         tblData = new javax.swing.JTable();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Cadastro de Inquilino");
 
-        btnNew.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        btnNew.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         btnNew.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/plus_48.png"))); // NOI18N
         btnNew.setText("Novo");
         btnNew.addActionListener(new java.awt.event.ActionListener() {
@@ -59,15 +60,15 @@ public class InquilinoView extends javax.swing.JFrame {
             }
         });
 
-        btnSave.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        btnSave.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         btnSave.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/save.png"))); // NOI18N
         btnSave.setText("Salvar");
 
-        btnRemove.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        btnRemove.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         btnRemove.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/cancel_48.png"))); // NOI18N
         btnRemove.setText("Excluir");
 
-        btnSearch.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        btnSearch.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         btnSearch.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/lup.png"))); // NOI18N
         btnSearch.setText("Buscar");
 
@@ -77,14 +78,14 @@ public class InquilinoView extends javax.swing.JFrame {
             pnlButtonsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlButtonsLayout.createSequentialGroup()
                 .addGap(38, 38, 38)
-                .addComponent(btnNew)
+                .addComponent(btnNew, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(12, 12, 12)
-                .addComponent(btnSave, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnSave, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(12, 12, 12)
-                .addComponent(btnRemove, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnRemove, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btnSearch)
-                .addContainerGap(42, Short.MAX_VALUE))
+                .addComponent(btnSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(39, Short.MAX_VALUE))
         );
         pnlButtonsLayout.setVerticalGroup(
             pnlButtonsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -98,35 +99,35 @@ public class InquilinoView extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        lblName.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+        lblName.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
         lblName.setText("Nome:");
 
-        txtName.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+        txtName.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
 
-        lblCity.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+        lblCity.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
         lblCity.setText("Cidade:");
 
-        cmbCity.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+        cmbCity.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
 
-        lblCourse.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+        lblCourse.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
         lblCourse.setText("Curso:");
 
-        cmbCourse.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+        cmbCourse.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
 
-        lblPeriod.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+        lblPeriod.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
         lblPeriod.setText("Período:");
 
-        cmbPeriod.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+        cmbPeriod.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
         cmbPeriod.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cmbPeriodActionPerformed(evt);
             }
         });
 
-        lblBadroom.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+        lblBadroom.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
         lblBadroom.setText("Quarto:");
 
-        cmbBadroom.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+        cmbBadroom.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
 
         jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/plus_24.png"))); // NOI18N
 
@@ -142,19 +143,22 @@ public class InquilinoView extends javax.swing.JFrame {
                     .addComponent(lblCourse)
                     .addComponent(lblPeriod))
                 .addGap(20, 20, 20)
-                .addGroup(pnlFieldsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(pnlFieldsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(pnlFieldsLayout.createSequentialGroup()
                         .addComponent(cmbPeriod, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(59, 59, 59)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(lblBadroom)
-                        .addGap(28, 28, 28)
-                        .addComponent(cmbBadroom, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGap(18, 18, 18)
-                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(txtName)
-                    .addComponent(cmbCity, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(cmbCourse, javax.swing.GroupLayout.PREFERRED_SIZE, 461, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(cmbBadroom, javax.swing.GroupLayout.PREFERRED_SIZE, 169, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(41, 41, 41))
+                    .addGroup(pnlFieldsLayout.createSequentialGroup()
+                        .addGroup(pnlFieldsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(cmbCity, 0, 545, Short.MAX_VALUE)
+                            .addComponent(cmbCourse, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(txtName))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
         pnlFieldsLayout.setVerticalGroup(
             pnlFieldsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -182,6 +186,7 @@ public class InquilinoView extends javax.swing.JFrame {
                 .addContainerGap(25, Short.MAX_VALUE))
         );
 
+        tblData.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
         tblData.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
@@ -219,15 +224,16 @@ public class InquilinoView extends javax.swing.JFrame {
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
-
-    private void cmbPeriodActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbPeriodActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_cmbPeriodActionPerformed
 
     private void btnNewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNewActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btnNewActionPerformed
+
+    private void cmbPeriodActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbPeriodActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cmbPeriodActionPerformed
 
     /**
      * @param args the command line arguments

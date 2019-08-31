@@ -5,41 +5,45 @@
  */
 package view;
 
-import control.PensionatoControl;
+import control.QuartoControl;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.rmi.RemoteException;
 import javax.swing.JOptionPane;
-import util.Real;
 import util.ValidacaoException;
 
 /**
  *
  * @author paulo
  */
-public class PensionatoView extends javax.swing.JFrame {
-    
-    private PensionatoControl pensionatoControl;
+public class QuartoView extends javax.swing.JFrame {
+
+    private QuartoControl quartoControl;
 
     /**
-     * Creates new form PensionatoView
+     * Creates new form QuartoView
      */
-    public PensionatoView() {
+    public QuartoView() {
         try{
-            pensionatoControl = new PensionatoControl();
+            quartoControl = new QuartoControl();
         }catch(RemoteException e){
             JOptionPane.showMessageDialog(this, 
                     "Erro: " + e.getMessage(),
                     "Erro",
                     JOptionPane.ERROR_MESSAGE);
         }
-        
         initComponents();
-        txtEndereco.grabFocus();
+        cbxPensionato.grabFocus();
+        
+        cbxPensionato.addActionListener (new ActionListener () {
+            public void actionPerformed(ActionEvent e) {
+                quartoControl.atualizarValor();
+            }
+        });
     }
-
-    public PensionatoControl getPensionatoControl() {
-        return pensionatoControl;
+    public QuartoControl getQuartoControl() {
+        return quartoControl;
     }
-
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -56,21 +60,22 @@ public class PensionatoView extends javax.swing.JFrame {
         btnRemove = new javax.swing.JButton();
         btnSearch = new javax.swing.JButton();
         pnlFields = new javax.swing.JPanel();
-        lblEndereco = new javax.swing.JLabel();
-        txtEndereco = new javax.swing.JTextField();
-        lblTelefone = new javax.swing.JLabel();
-        txtTelefone = new javax.swing.JTextField();
-        lblQuartos = new javax.swing.JLabel();
-        txtQuartos = new javax.swing.JTextField();
-        lblValorPadrao = new javax.swing.JLabel();
-        txtValorPadrao = new javax.swing.JTextField();
+        lblPensionato = new javax.swing.JLabel();
+        cbxPensionato = new javax.swing.JComboBox();
+        lblNome = new javax.swing.JLabel();
+        txtNome = new javax.swing.JTextField();
+        lblDescricao = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        txtDescricao = new javax.swing.JTextPane();
+        lblValor = new javax.swing.JLabel();
+        txtValor = new javax.swing.JTextField();
         srcData = new javax.swing.JScrollPane();
         tblData = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Cadastro de Pensionato");
+        setTitle("Cadastro de Quarto");
         addWindowListener(new java.awt.event.WindowAdapter() {
-            public void windowClosed(java.awt.event.WindowEvent evt) {
+            public void windowClosing(java.awt.event.WindowEvent evt) {
                 FecharJanela(evt);
             }
         });
@@ -124,7 +129,7 @@ public class PensionatoView extends javax.swing.JFrame {
                 .addComponent(btnRemove, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(40, Short.MAX_VALUE))
+                .addContainerGap(49, Short.MAX_VALUE))
         );
         pnlButtonsLayout.setVerticalGroup(
             pnlButtonsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -138,36 +143,42 @@ public class PensionatoView extends javax.swing.JFrame {
                 .addGap(19, 19, 19))
         );
 
-        lblEndereco.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
-        lblEndereco.setText("Endereço:");
+        lblPensionato.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
+        lblPensionato.setText("Pensionato:");
 
-        txtEndereco.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
+        cbxPensionato.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        cbxPensionato.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
-        org.jdesktop.beansbinding.Binding binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, this, org.jdesktop.beansbinding.ELProperty.create("${pensionatoControl.pensionatoDigitado.endereco}"), txtEndereco, org.jdesktop.beansbinding.BeanProperty.create("text"));
+        org.jdesktop.beansbinding.ELProperty eLProperty = org.jdesktop.beansbinding.ELProperty.create("${quartoControl.pensionatosTabela}");
+        org.jdesktop.swingbinding.JComboBoxBinding jComboBoxBinding = org.jdesktop.swingbinding.SwingBindings.createJComboBoxBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, this, eLProperty, cbxPensionato);
+        bindingGroup.addBinding(jComboBoxBinding);
+        org.jdesktop.beansbinding.Binding binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, this, org.jdesktop.beansbinding.ELProperty.create("${quartoControl.quartoDigitado.pensionato}"), cbxPensionato, org.jdesktop.beansbinding.BeanProperty.create("selectedItem"));
         bindingGroup.addBinding(binding);
 
-        lblTelefone.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
-        lblTelefone.setText("Telefone:");
+        lblNome.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
+        lblNome.setText("Nome:");
 
-        txtTelefone.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
+        txtNome.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
 
-        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, this, org.jdesktop.beansbinding.ELProperty.create("${pensionatoControl.pensionatoDigitado.telefone}"), txtTelefone, org.jdesktop.beansbinding.BeanProperty.create("text"));
+        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, this, org.jdesktop.beansbinding.ELProperty.create("${quartoControl.quartoDigitado.nome}"), txtNome, org.jdesktop.beansbinding.BeanProperty.create("text"));
         bindingGroup.addBinding(binding);
 
-        lblQuartos.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
-        lblQuartos.setText("Número de quartos:");
+        lblDescricao.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
+        lblDescricao.setText("Descrição:");
 
-        txtQuartos.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
+        txtDescricao.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
 
-        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, this, org.jdesktop.beansbinding.ELProperty.create("${pensionatoControl.pensionatoDigitado.qtdQuartos}"), txtQuartos, org.jdesktop.beansbinding.BeanProperty.create("text"));
+        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, this, org.jdesktop.beansbinding.ELProperty.create("${quartoControl.quartoDigitado.descricao}"), txtDescricao, org.jdesktop.beansbinding.BeanProperty.create("text"));
         bindingGroup.addBinding(binding);
 
-        lblValorPadrao.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
-        lblValorPadrao.setText("Valor padrão:");
+        jScrollPane1.setViewportView(txtDescricao);
 
-        txtValorPadrao.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
+        lblValor.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
+        lblValor.setText("Valor:");
 
-        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, this, org.jdesktop.beansbinding.ELProperty.create("${pensionatoControl.valorPadrao}"), txtValorPadrao, org.jdesktop.beansbinding.BeanProperty.create("text"));
+        txtValor.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
+
+        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, this, org.jdesktop.beansbinding.ELProperty.create("${quartoControl.valor}"), txtValor, org.jdesktop.beansbinding.BeanProperty.create("text"));
         bindingGroup.addBinding(binding);
 
         javax.swing.GroupLayout pnlFieldsLayout = new javax.swing.GroupLayout(pnlFields);
@@ -175,75 +186,67 @@ public class PensionatoView extends javax.swing.JFrame {
         pnlFieldsLayout.setHorizontalGroup(
             pnlFieldsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlFieldsLayout.createSequentialGroup()
-                .addGap(36, 36, 36)
+                .addGap(42, 42, 42)
+                .addGroup(pnlFieldsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(lblDescricao)
+                    .addComponent(lblPensionato)
+                    .addComponent(lblNome))
+                .addGap(33, 33, 33)
                 .addGroup(pnlFieldsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlFieldsLayout.createSequentialGroup()
-                        .addComponent(lblEndereco)
-                        .addGap(33, 33, 33))
                     .addGroup(pnlFieldsLayout.createSequentialGroup()
-                        .addComponent(lblTelefone)
-                        .addGap(39, 39, 39)))
-                .addGroup(pnlFieldsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(txtEndereco, javax.swing.GroupLayout.PREFERRED_SIZE, 516, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, pnlFieldsLayout.createSequentialGroup()
-                        .addGroup(pnlFieldsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(lblValorPadrao)
-                            .addGroup(pnlFieldsLayout.createSequentialGroup()
-                                .addComponent(txtTelefone, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(42, 42, 42)
-                                .addComponent(lblQuartos)))
-                        .addGap(26, 26, 26)
-                        .addGroup(pnlFieldsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtQuartos)
-                            .addComponent(txtValorPadrao))))
-                .addContainerGap(43, Short.MAX_VALUE))
+                        .addComponent(txtNome, javax.swing.GroupLayout.PREFERRED_SIZE, 228, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(74, 74, 74)
+                        .addComponent(lblValor)
+                        .addGap(18, 18, 18)
+                        .addComponent(txtValor))
+                    .addComponent(cbxPensionato, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1))
+                .addGap(42, 42, 42))
         );
         pnlFieldsLayout.setVerticalGroup(
             pnlFieldsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pnlFieldsLayout.createSequentialGroup()
-                .addGap(20, 20, 20)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlFieldsLayout.createSequentialGroup()
+                .addGap(39, 39, 39)
                 .addGroup(pnlFieldsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblEndereco)
-                    .addComponent(txtEndereco, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(32, 32, 32)
+                    .addComponent(lblPensionato)
+                    .addComponent(cbxPensionato, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(29, 29, 29)
                 .addGroup(pnlFieldsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblTelefone)
-                    .addComponent(lblQuartos)
-                    .addComponent(txtQuartos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtTelefone, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(41, 41, 41)
-                .addGroup(pnlFieldsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblValorPadrao)
-                    .addComponent(txtValorPadrao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(40, Short.MAX_VALUE))
+                    .addComponent(lblNome)
+                    .addComponent(txtNome, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblValor)
+                    .addComponent(txtValor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(29, 29, 29)
+                .addGroup(pnlFieldsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lblDescricao)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(29, Short.MAX_VALUE))
         );
 
         tblData.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
 
-        org.jdesktop.beansbinding.ELProperty eLProperty = org.jdesktop.beansbinding.ELProperty.create("${pensionatoControl.pensionatosTabela}");
+        eLProperty = org.jdesktop.beansbinding.ELProperty.create("${quartoControl.quartosTabela}");
         org.jdesktop.swingbinding.JTableBinding jTableBinding = org.jdesktop.swingbinding.SwingBindings.createJTableBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, this, eLProperty, tblData);
-        org.jdesktop.swingbinding.JTableBinding.ColumnBinding columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${endereco}"));
-        columnBinding.setColumnName("Endereco");
+        org.jdesktop.swingbinding.JTableBinding.ColumnBinding columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${nome}"));
+        columnBinding.setColumnName("Nome");
         columnBinding.setColumnClass(String.class);
-        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${telefone}"));
-        columnBinding.setColumnName("Telefone");
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${descricao}"));
+        columnBinding.setColumnName("Descrição");
         columnBinding.setColumnClass(String.class);
-        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${qtdQuartos}"));
-        columnBinding.setColumnName("Quartos");
-        columnBinding.setColumnClass(Integer.class);
-        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${valorPadrao}"));
-        columnBinding.setColumnName("Valor Padrão");
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${pensionato.endereco}"));
+        columnBinding.setColumnName("Pensionato");
+        columnBinding.setColumnClass(String.class);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${valor}"));
+        columnBinding.setColumnName("Valor");
         columnBinding.setColumnClass(Float.class);
+        columnBinding.setEditable(false);
         bindingGroup.addBinding(jTableBinding);
-        jTableBinding.bind();binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, this, org.jdesktop.beansbinding.ELProperty.create("${pensionatoControl.pensionatoSelecionado}"), tblData, org.jdesktop.beansbinding.BeanProperty.create("selectedElement"));
+        jTableBinding.bind();binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, this, org.jdesktop.beansbinding.ELProperty.create("${quartoControl.quartoSelecionado}"), tblData, org.jdesktop.beansbinding.BeanProperty.create("selectedElement"));
         bindingGroup.addBinding(binding);
 
         srcData.setViewportView(tblData);
         if (tblData.getColumnModel().getColumnCount() > 0) {
-            tblData.getColumnModel().getColumn(0).setPreferredWidth(400);
-            tblData.getColumnModel().getColumn(1).setPreferredWidth(100);
-            tblData.getColumnModel().getColumn(2).setPreferredWidth(20);
-            tblData.getColumnModel().getColumn(3).setPreferredWidth(50);
+            tblData.getColumnModel().getColumn(3).setPreferredWidth(10);
         }
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -265,7 +268,7 @@ public class PensionatoView extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(pnlFields, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(srcData, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(srcData, javax.swing.GroupLayout.DEFAULT_SIZE, 106, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -276,55 +279,56 @@ public class PensionatoView extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnNewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNewActionPerformed
-        pensionatoControl.novo();
+        quartoControl.novo();
+        this.cbxPensionato.setSelectedItem(null);
     }//GEN-LAST:event_btnNewActionPerformed
 
     private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
         try{
-            pensionatoControl.salvar();
+            quartoControl.salvar();
             JOptionPane.showMessageDialog(this,
-                    "Pensionato salvo com sucesso!",
-                    "Salvar Pensionato",
-                    JOptionPane.INFORMATION_MESSAGE);
+                "Quarto salvo com sucesso!",
+                "Salvar Quarto",
+                JOptionPane.INFORMATION_MESSAGE);
         }catch(ValidacaoException ex){
-            JOptionPane.showMessageDialog(this, 
+            JOptionPane.showMessageDialog(this,
                 ex.getMessage(),
                 "Falha de validação",
                 JOptionPane.WARNING_MESSAGE);
         }catch(RemoteException ex){
-            JOptionPane.showMessageDialog(this, 
-                    "Erro de conexão: " + ex.getMessage(),
-                    "Aivso", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(this,
+                "Erro de conexão: " + ex.getMessage(),
+                "Aivso", JOptionPane.WARNING_MESSAGE);
         }
     }//GEN-LAST:event_btnSaveActionPerformed
 
     private void btnRemoveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRemoveActionPerformed
-        if(JOptionPane.showConfirmDialog(this, 
-                "Deseja realmente excluir o Pensionato?",
-                "Excluir Pensionato",
-                JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION){
-            try{        
-                pensionatoControl.excluir();
+        if(JOptionPane.showConfirmDialog(this,
+            "Deseja realmente excluir o Quarto?",
+            "Excluir Quarto",
+            JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION){
+            try{
+                quartoControl.excluir();
             }catch(RemoteException ex){
-                JOptionPane.showMessageDialog(this, 
-                        "Erro de conexão: " + ex.getMessage(),
-                        "Aivso", JOptionPane.WARNING_MESSAGE);
+                JOptionPane.showMessageDialog(this,
+                    "Erro de conexão: " + ex.getMessage(),
+                    "Aivso", JOptionPane.WARNING_MESSAGE);
             }
         }
     }//GEN-LAST:event_btnRemoveActionPerformed
 
     private void btnSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchActionPerformed
-        try{        
-            pensionatoControl.pesquisar();
+        try{
+            quartoControl.pesquisar();
         }catch(RemoteException ex){
-            JOptionPane.showMessageDialog(this, 
-                    "Erro de conexão: " + ex.getMessage(),
-                    "Aivso", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(this,
+                "Erro de conexão: " + ex.getMessage(),
+                "Aivso", JOptionPane.WARNING_MESSAGE);
         }
     }//GEN-LAST:event_btnSearchActionPerformed
 
     private void FecharJanela(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_FecharJanela
-        pensionatoControl.fechar();
+        quartoControl.fechar();
     }//GEN-LAST:event_FecharJanela
 
     /**
@@ -344,20 +348,20 @@ public class PensionatoView extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(PensionatoView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(QuartoView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(PensionatoView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(QuartoView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(PensionatoView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(QuartoView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(PensionatoView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(QuartoView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new PensionatoView().setVisible(true);
+                new QuartoView().setVisible(true);
             }
         });
     }
@@ -367,18 +371,19 @@ public class PensionatoView extends javax.swing.JFrame {
     private javax.swing.JButton btnRemove;
     private javax.swing.JButton btnSave;
     private javax.swing.JButton btnSearch;
-    private javax.swing.JLabel lblEndereco;
-    private javax.swing.JLabel lblQuartos;
-    private javax.swing.JLabel lblTelefone;
-    private javax.swing.JLabel lblValorPadrao;
+    private javax.swing.JComboBox cbxPensionato;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel lblDescricao;
+    private javax.swing.JLabel lblNome;
+    private javax.swing.JLabel lblPensionato;
+    private javax.swing.JLabel lblValor;
     private javax.swing.JPanel pnlButtons;
     private javax.swing.JPanel pnlFields;
     private javax.swing.JScrollPane srcData;
     private javax.swing.JTable tblData;
-    private javax.swing.JTextField txtEndereco;
-    private javax.swing.JTextField txtQuartos;
-    private javax.swing.JTextField txtTelefone;
-    private javax.swing.JTextField txtValorPadrao;
+    private javax.swing.JTextPane txtDescricao;
+    private javax.swing.JTextField txtNome;
+    private javax.swing.JTextField txtValor;
     private org.jdesktop.beansbinding.BindingGroup bindingGroup;
     // End of variables declaration//GEN-END:variables
 }

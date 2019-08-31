@@ -13,8 +13,10 @@ import java.util.ArrayList;
 import java.util.List;
 import model.service.ServiceLocator;
 import org.jdesktop.observablecollections.ObservableCollections;
-import service.PensionatoService;
+import service.IPensionatoService;
+import util.Real;
 import util.ValidacaoException;
+import util.observable.IDataSubscription;
 
 /**
  *
@@ -27,9 +29,13 @@ public final class PensionatoControl {
     private Pensionato pensionatoSelecionado;
     private Pensionato pensionatoDigitado;
     private List<Pensionato> pensionatosTabela;
-    private final PensionatoService pensionatoService;
+    private final IPensionatoService pensionatoService;
+    
+    private String valorPadrao;
+    List<IDataSubscription> searchPensionatos;
         
     public PensionatoControl() throws RemoteException{
+        searchPensionatos = new ArrayList<>();
         pensionatoService = ServiceLocator.getPensionatoService();
         pensionatosTabela = ObservableCollections.observableList(
                 new ArrayList<Pensionato>());
@@ -41,22 +47,38 @@ public final class PensionatoControl {
         setPensionatoDigitado(new Pensionato());
     }
     public void pesquisar() throws RemoteException{
-        pensionatosTabela.clear();
-        pensionatosTabela.addAll(pensionatoService.Search(pensionatoDigitado));
+        searchPensionatos.forEach((IDataSubscription s) -> s.unsubscribe());
+        searchPensionatos.add(pensionatoService.Search(pensionatoDigitado).subscribe((List<Pensionato> list) -> {
+            pensionatosTabela.clear();
+            pensionatosTabela.addAll(list);
+        }));
     }
+    
     public void salvar() throws ValidacaoException, RemoteException{
+        pensionatoDigitado.setValorPadrao(Real.converter(valorPadrao, "Valor Padrão"));
         pensionatoDigitado.validar();
-        pensionatoDigitado.setId(pensionatoService.Save(pensionatoDigitado));
+        pensionatoService.Save(pensionatoDigitado);
         
         novo();
-        pesquisar();
     }
     public void excluir() throws RemoteException{
         pensionatoService.Delete(pensionatoDigitado);
         
         novo();
-        pesquisar();
     }
+    
+    public void fechar(){
+        searchPensionatos.forEach((IDataSubscription s) -> s.unsubscribe());
+    }
+    
+    public String getValorPadrao() {
+        return valorPadrao;
+    }
+    
+    public void setValorPadrao(String valorPadrao) {
+        this.valorPadrao = valorPadrao;
+    }
+    
     public Pensionato getPensionatoSelecionado() {
         return pensionatoSelecionado;
     }
@@ -67,11 +89,12 @@ public final class PensionatoControl {
             setPensionatoDigitado(pensionatoSelecionado);
         }
     }
-
+    
     public Pensionato getPensionatoDigitado() {
+        
         return pensionatoDigitado;
     }
-
+    
     public void setPensionatoDigitado(Pensionato pensionatoDigitado) {
         Pensionato oldPensionatoDigitado = this.pensionatoDigitado;
         if(!pensionatoDigitado.equals(oldPensionatoDigitado))
@@ -79,6 +102,14 @@ public final class PensionatoControl {
         
         propertyChangeSupport.firePropertyChange(
                 "pensionatoDigitado", oldPensionatoDigitado, pensionatoDigitado);
+        
+        float oldValorPadraoF = oldPensionatoDigitado == null ? 0f : oldPensionatoDigitado.getValorPadrao();
+        String oldValorPadrao = Real.formatar(oldValorPadraoF);
+        String newValorPadrao = Real.formatar(pensionatoDigitado.getValorPadrao());
+        if(!newValorPadrao.equals(oldValorPadrao))
+            this.valorPadrao = newValorPadrao;
+        
+        propertyChangeSupport.firePropertyChange("valorPadrao", oldValorPadrao, newValorPadrao);
     }
 
     public List<Pensionato> getPensionatosTabela() {

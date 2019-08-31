@@ -5,69 +5,31 @@
  */
 package repository;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import javax.persistence.EntityManager;
-import javax.persistence.Query;
+import com.google.firebase.database.FirebaseDatabase;
 import model.dao.Conexao;
+import model.dao.CrudDao;
+import model.dao.PensionatoCrudavel;
 import model.domain.Pensionato;
-
+import util.observable.IDataSubscribe;
 /**
  *
  * @author paulo
  */
 public class PensionatoRepository {    
-    public Integer Save(Pensionato pensionato){
-        EntityManager em = Conexao.getEntityManager();
-        em.getTransaction().begin();
-        
-        pensionato = em.merge(pensionato);
-        
-        em.persist(pensionato);
-        
-        em.getTransaction().commit();
-        em.close();
-        
-        return pensionato.getId();
+    
+    public void Save(Pensionato pensionato){
+        FirebaseDatabase db = Conexao.getDatabase();
+        PensionatoCrudavel crudavel = new PensionatoCrudavel(db);
+        new CrudDao<>(crudavel).save(pensionato);
     }
     public void Delete(Pensionato pensionato){
-        EntityManager em = Conexao.getEntityManager();
-        em.getTransaction().begin();
-        
-        pensionato = em.merge(pensionato);
-        em.remove(pensionato);
-        
-        em.getTransaction().commit();
-        em.close();
+        FirebaseDatabase db = Conexao.getDatabase();
+        PensionatoCrudavel crudavel = new PensionatoCrudavel(db);
+        new CrudDao<>(crudavel).delete(pensionato);
     }
-    public List<Pensionato> Search(Pensionato pensionato){        
-        EntityManager em = Conexao.getEntityManager();
-        StringBuffer sql = new StringBuffer("from Pensionato p "
-                + "where 1=1 ");        
-        
-        Map<String, Object> params = new HashMap<String, Object>();
-        if(pensionato.getId() != null){        
-            sql.append("and  p.id=:id ");
-            params.put("id", pensionato.getId());
-        }
-        if(pensionato.getEndereco() != null &&
-                !pensionato.getEndereco().equals("")){        
-            sql.append("and p.endereco like :endereco ");
-            params.put("endereco", "%"+pensionato.getEndereco()+"%");
-        }
-        if(pensionato.getTelefone() != null &&
-                !pensionato.getTelefone().equals("")){
-            sql.append("and p.telefone like :telefone ");
-            params.put("telefone", "%"+pensionato.getTelefone()+"%");
-        }
-        
-        Query query = em.createQuery(sql.toString());   
-        params.keySet().stream().forEach((key) -> {
-            query.setParameter(key, params.get(key));
-        });
-        
-        return query.getResultList();
+    public IDataSubscribe<Pensionato> Search(Pensionato pensionato){
+        FirebaseDatabase db = Conexao.getDatabase();
+        PensionatoCrudavel crudavel = new PensionatoCrudavel(db);
+        return new CrudDao<>(crudavel).search(pensionato);
     }
 }

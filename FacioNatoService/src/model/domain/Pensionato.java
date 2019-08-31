@@ -5,41 +5,23 @@
  */
 package model.domain;
 
-import java.io.Serializable;
+import java.util.List;
 import java.util.Objects;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
 import util.ValidacaoException;
-
 /**
  *
  * @author paulo
  */
-@Entity
-@Table(name="PENSIONATO")
-public class Pensionato implements Serializable{
-    
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name="ID")
-    private Integer id;
-    
-    @Column(name="ENDERECO", length = 255, nullable = false)
+public class Pensionato {
+    private String identifier;
     private String endereco;
-    
-    @Column(name="TELEFONE", length = 20)
     private String telefone;
-    
-    @Column(name="QTD_QUARTOS", nullable = false)
-    private int quartos;
+    private float valorPadrao;    
+    private int qtdQuartos;
 
     public Pensionato() {
     }
-    
+            
     public void validar() throws ValidacaoException{
         if(endereco == null || endereco.equals(""))
             throw new ValidacaoException("Campo Endereço deve ser preenchido");
@@ -50,17 +32,20 @@ public class Pensionato implements Serializable{
         if(telefone == null || telefone.length() > 20)
             throw new ValidacaoException("Campo Telefone deve ser preenchido");
         
-        if(quartos < 1)
+        if(valorPadrao <= 0)
+            throw new ValidacaoException("Campo Valor Padrão deve ser preenchido");
+        
+        if(qtdQuartos < 1)
             throw new ValidacaoException("Quantidade de quartos insulficiente");
             
     }
-
-    public Integer getId() {
-        return id;
+        
+    public String getIdentifier() {
+        return identifier;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public void setIdentifier(String identifier) {
+        this.identifier = identifier;
     }
 
     public String getEndereco() {
@@ -79,19 +64,20 @@ public class Pensionato implements Serializable{
         this.telefone = telefone;
     }
 
-    public int getQuartos() {
-        return quartos;
+    public int getQtdQuartos() {
+        return qtdQuartos;
+    }
+    
+    public void setQtdQuartos(int qtdQuartos) {
+        this.qtdQuartos = qtdQuartos;
+    }
+    
+    public float getValorPadrao() {
+        return valorPadrao;
     }
 
-    public void setQuartos(int quartos) {
-        this.quartos = quartos;
-    }    
-    
-    @Override
-    public int hashCode() {
-        int hash = 5;
-        hash = 29 * hash + Objects.hashCode(this.id);
-        return hash;
+    public void setValorPadrao(float valorPadrao) {
+        this.valorPadrao = valorPadrao;
     }
 
     @Override
@@ -103,7 +89,7 @@ public class Pensionato implements Serializable{
             return false;
         }
         final Pensionato other = (Pensionato) obj;
-        if (!Objects.equals(this.id, other.id)) {
+        if (!Objects.equals(this.identifier, other.identifier)) {
             return false;
         }
         return true;

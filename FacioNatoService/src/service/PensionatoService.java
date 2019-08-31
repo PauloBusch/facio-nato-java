@@ -5,20 +5,34 @@
  */
 package service;
 
-import java.rmi.Remote;
-import java.rmi.RemoteException;
-import java.util.List;
 import model.domain.Pensionato;
+import repository.PensionatoRepository;
+import util.observable.IDataSubscribe;
 
 /**
  *
  * @author paulo
  */
-public interface PensionatoService extends Remote {
-    static final String NOME_SERVICO = "ServicoPensionato";
-    static final String URL_SERVICO = "rmi://127.0.0.1/" + NOME_SERVICO;
+public class PensionatoService implements IPensionatoService {
+    private final PensionatoRepository _pensionatoRepository;
     
-    public Integer Save(Pensionato pensionato) throws RemoteException;
-    public void Delete(Pensionato pensionato) throws RemoteException;
-    public List<Pensionato> Search(Pensionato pensionato) throws RemoteException; 
+    public PensionatoService(){
+        _pensionatoRepository = new PensionatoRepository();
+    }
+    
+    @Override
+    public void Save(Pensionato pensionato){
+        _pensionatoRepository.Save(pensionato);
+    }
+    
+    @Override
+    public void Delete(Pensionato pensionato){
+        _pensionatoRepository.Delete(pensionato);
+    }
+    
+    @Override
+    public IDataSubscribe<Pensionato> Search(Pensionato pensionato){
+        return _pensionatoRepository.Search(pensionato);
+    }
+    
 }
